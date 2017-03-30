@@ -6,13 +6,13 @@ I used a multi-processed [alpha-beta pruning](en.wikipedia.org/wiki/Alpha%E2%80%
 *NOTE:* This AI was developed using `Python 3.4`. It is incompatible with `Python 2.7` or older. 
 
 ---
-###Playing Games
+### Playing Games
 
 To play a game, simply run `parallel_client.py`. This plays two depth 15 alpha-beta routines for two rounds with a 10 second time limit. 
 However, you can play different depth AIs against each other for a different amount of rounds with a different time limit. 
 For example, `python parallel_client.py -a 9 -b 1 -g 1 -t 5` would play a depth 9 alpha-beta routine with a depth 3 alpha-beta routine for one round with a 5 second time limit. 
 
-######The full usage:
+###### The full usage:
 
 ```
 Usage: python parallel_client.py [ARGS...]
