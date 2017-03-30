@@ -8,14 +8,15 @@ from time import sleep
 inf = float('inf')
 
 class sarkistrat:
-	def __init__(self):
+	def __init__(self, m_depth=15):
 		self.movedict = {}
 		self.core = core()
+		self.m_depth = m_depth
 
 	def best_strategy(self, board, player, best_move, still_running):
 		"""Run Multi-Processed Alpha-Beta, get the best move, and put it in best_move.
-		   Runs while still_running evaluates to true.  
-		"""     
+		   Runs while still_running evaluates to true.	
+		"""		
 		self.best_move = best_move
 		self.still_running = still_running
 		self.player = player
@@ -23,7 +24,7 @@ class sarkistrat:
 
 	def mpalphabeta(self, board, player):
 		"""Places the best possible move calculated in the time alotted (10 seconds) in self.best_value"""
-		for i in range(1, 18, 4):
+		for i in range(0, self.m_depth, 2):
 			self.m_depth = i
 			q = mp.Queue()
 			if player is core2.WHITE:

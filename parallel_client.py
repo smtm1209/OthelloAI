@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 
 import sarkistrat as ai
 import Othello_Core as core
@@ -5,17 +6,14 @@ import time
 from multiprocessing import Process, Value
 import os, signal, sys, getopt
 
-ai1 = ai.sarkistrat() 
-ai2 = ai.sarkirandom()
 ref = ai.sarkiref()
 
-def tournament_player(black_choice, white_choice, black_name="Black", white_name="White", time_limit=5):
+def tournament_player(black_choice, white_choice, black_name="Black", white_name="White", time_limit=5, games=2):
     """ runs a tournament of an even number of games, alternating black/white with each strategy
         and returns the results """
     ai1_wins = 0
-    rounds = 1
     pg = False
-    for i in range(rounds):
+    for i in range(games):
         try:
             (black, white) = black_choice, white_choice
             board, score = play(black, white, black_name, white_name, time_limit, pg)
@@ -39,7 +37,6 @@ def play(black_strategy, white_strategy, black_name, white_name, time_limit=60, 
     board = ref.initial_board()
     player = core.WHITE
     print("Time Limit: ", time_limit)
-    print("PG: ", pg)
     strategy = lambda who: black_strategy if who == core.BLACK else white_strategy
     while player is not None:
         start_time = time.time()
@@ -75,5 +72,58 @@ def play(black_strategy, white_strategy, black_name, white_name, time_limit=60, 
 
 
 if __name__ == "__main__":
-    tournament_player(ai1.best_strategy, ai2.best_strategy, "black", "white", 10)
+    helpString ="""Usage: python parallel_client.py [ARGS...]
+-a -AI1 [integer]\t\t: depth of AI1's alpha-beta search (default/max: 15, negative: random AI)
+-b -AI2 [integer]\t\t: depth of AI2's alpha-beta search (default/max: 15, negative: random AI)
+-t -timelimit [integer]\t\t: time limit per move (default: 10, min: 2)
+-g -games [integer]\t\t: number of games to play (default: 2, min: 1)
+-h -help\t\t: display this help dialog"""
+    ai1, ai2, timelimit, games = ai.sarkistrat(), ai.sarkistrat(), 10, 2
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'ha:b:t:g:', ['help', 'AI1=', 'AI2=', 'timelimit=', 'games='])
+    except getopt.GetoptError:
+        print(helpString)
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt in ('-h', '--help'):
+            print(helpString)
+            sys.exit()
+        elif opt in ('-a', '-AI1'):
+            a = 15
+            try:
+                a = min(a, int(arg))
+            except:
+                print('Arguments have to be integers')
+                sys.exit(2)
+            ai1 = ai.sarkistrat(a) if a >= 0 else ai.sarkirandom()
+        elif opt in ('-b', '-AI2'):
+            b = 15
+            try:
+                b = min(b, int(arg))
+            except:
+                print('Argument have to be integers')
+                sys.exit(2)
+            ai2 = ai.sarkistrat(b) if b >= 0 else ai.sarkirandom()
+        elif opt in ('-t', '-timelimit'):
+            t = 2
+            try:
+                t = max(t, int(arg))
+            except:
+                print('Argument have to be integers')
+                sys.exit(2)
+            timelimit = t
+        elif opt in ('-g', '-games'):
+            g = 1
+            try: 
+                g = max(g, int(arg))
+            except:
+                print('Argument have to be integers')
+                sys.exit(2)
+            games = g
+        else:
+            print('Unknown option {}'.format(opt))
+            sys.exit(2)
+    print('Games: {:d}, Time limit: {:d}'.format(games, timelimit))            
+    time.sleep(10)
+    tournament_player(ai1.best_strategy, ai2.best_strategy, "black", "white", timelimit, games)
 
