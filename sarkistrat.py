@@ -24,7 +24,7 @@ class sarkistrat:
 
 	def mpalphabeta(self, board, player):
 		"""Places the best possible move calculated in the time alotted (10 seconds) in self.best_value"""
-		for i in range(0, self.m_depth, 2):
+		for i in range(1, self.m_depth, 2):
 			self.m_depth = i
 			q = mp.Queue()
 			if player is core2.WHITE:
@@ -38,7 +38,6 @@ class sarkistrat:
 					results.append(q.get())
 				results.sort(key=lambda x: x[1], reverse=True)
 				self.best_move.value = results[0][0]
-				print('AI move: ', self.best_move.value)
 			elif player is core2.BLACK:
 				moves = self.core.legal_moves(core2.BLACK, board)
 				shuffle(moves)
@@ -50,7 +49,6 @@ class sarkistrat:
 					results.append(q.get())
 				results.sort(key=lambda x: x[1])
 				self.best_move.value = results[0][0]
-				print('AI move: ', self.best_move.value)
 		return
 		
 
@@ -144,7 +142,6 @@ class sarkirandom:
 		"""Places a random, legal move into best_move"""
 		move = self.random_move(board, player)
 		best_move.value = move
-		print("RAND move: ", move)
 		return move		
 		
 
