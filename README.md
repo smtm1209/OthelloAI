@@ -1,9 +1,9 @@
 # Othello AI
-An AI I developed for the board game [Othello](en.wikipedia.org/wiki/Reversi)
+An AI I developed for the board game [Othello](http://en.wikipedia.org/wiki/Reversi)
 
-I used a multi-processed [alpha-beta pruning](en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) routine with a scoring matrix heuristic. This routine is conatined within the `sarkistrat` class in `sarkistrat.py`
+I used a multi-processed [alpha-beta pruning](http://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) routine with a scoring matrix heuristic. This routine is conatined within the `sarkistrat` class in `sarkistrat.py`
 
-*NOTE:* This AI was developed using `Python 3.4`. It is incompatible with `Python 2.7` or older. 
+**_Note:_** This AI was developed using `Python 3.4`. It is incompatible with `Python 2.7` or older. 
 
 ---
 ### Playing Games
