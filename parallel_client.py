@@ -28,7 +28,7 @@ def tournament_player(black_choice, white_choice, black_name="Black", white_name
 		except core.OthelloCore.IllegalMoveError as e:
 			print(e)
 			return
-	print("strategy A won", ai1_wins, "out of", 2*rounds)
+	print("strategy A won", ai1_wins, "out of", 2*games)
 	return ai1_wins
 
 
